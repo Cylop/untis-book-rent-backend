@@ -8,7 +8,7 @@ import { UserEntity } from '@entities/users.entity';
 import AuthRoute from '@routes/auth.route';
 
 beforeAll(async () => {
-  await createConnection(dbConnection);
+  await createConnection(dbConnection());
 });
 
 afterAll(async () => {

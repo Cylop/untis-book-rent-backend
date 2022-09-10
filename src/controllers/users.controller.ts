@@ -1,7 +1,8 @@
 import { NextFunction, Request, Response } from 'express';
-import { CreateUserDto } from '@dtos/users.dto';
+import { CreateUserDto, UserResultDto } from '@dtos/users.dto';
 import { User } from '@interfaces/users.interface';
 import userService from '@services/users.service';
+import { mapToDto } from '@/utils/mapToDto';
 
 class UsersController {
   public userService = new userService();
@@ -9,8 +10,9 @@ class UsersController {
   public getUsers = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
     try {
       const findAllUsersData: User[] = await this.userService.findAllUser();
+      const dto = mapToDto(findAllUsersData, UserResultDto);
 
-      res.status(200).json({ data: findAllUsersData, message: 'findAll' });
+      res.status(200).json({ data: dto, message: 'findAll' });
     } catch (error) {
       next(error);
     }
@@ -20,8 +22,9 @@ class UsersController {
     try {
       const userId = Number(req.params.id);
       const findOneUserData: User = await this.userService.findUserById(userId);
+      const dto = mapToDto(findOneUserData, UserResultDto);
 
-      res.status(200).json({ data: findOneUserData, message: 'findOne' });
+      res.status(200).json({ data: dto, message: 'findOne' });
     } catch (error) {
       next(error);
     }
@@ -31,8 +34,9 @@ class UsersController {
     try {
       const userData: CreateUserDto = req.body;
       const createUserData: User = await this.userService.createUser(userData);
+      const dto = mapToDto(createUserData, UserResultDto);
 
-      res.status(201).json({ data: createUserData, message: 'created' });
+      res.status(201).json({ data: dto, message: 'created' });
     } catch (error) {
       next(error);
     }
@@ -43,8 +47,9 @@ class UsersController {
       const userId = Number(req.params.id);
       const userData: CreateUserDto = req.body;
       const updateUserData: User = await this.userService.updateUser(userId, userData);
+      const dto = mapToDto(updateUserData, UserResultDto);
 
-      res.status(200).json({ data: updateUserData, message: 'updated' });
+      res.status(200).json({ data: dto, message: 'updated' });
     } catch (error) {
       next(error);
     }
@@ -54,8 +59,9 @@ class UsersController {
     try {
       const userId = Number(req.params.id);
       const deleteUserData: User = await this.userService.deleteUser(userId);
+      const dto = mapToDto(deleteUserData, UserResultDto);
 
-      res.status(200).json({ data: deleteUserData, message: 'deleted' });
+      res.status(200).json({ data: dto, message: 'deleted' });
     } catch (error) {
       next(error);
     }
