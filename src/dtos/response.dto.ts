@@ -9,7 +9,7 @@ export abstract class AbstractResponseContainer extends BaseDto {
 
   constructor(req: Request) {
     super();
-    this.path = req.path;
+    this.path = req.baseUrl + req.path;
   }
 }
 
