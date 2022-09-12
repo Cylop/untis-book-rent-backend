@@ -1,5 +1,5 @@
 import { Expose } from 'class-transformer';
-import { IsDate, IsISBN, IsNumber, IsOptional, IsString, IsUrl } from 'class-validator';
+import { IsDate, IsDateString, IsISBN, IsNumber, IsOptional, IsString, IsUrl } from 'class-validator';
 import { BaseDto } from './base.dto';
 import { UserResultDto } from './users.dto';
 
@@ -22,7 +22,7 @@ export class CreateBookDto extends BaseDto {
   public publisher: string;
 
   @IsOptional()
-  @IsDate()
+  @IsDateString()
   public publishingDate: Date;
 
   @IsNumber()
