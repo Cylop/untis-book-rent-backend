@@ -5,10 +5,19 @@ import UsersRoute from '@routes/users.route';
 import validateEnv from '@utils/validateEnv';
 import BookInventoriesRoute from './routes/bookinventories.route';
 import BooksRoute from './routes/books.route';
+import NotFoundRoute from './routes/notfound.route';
 import SchoolClassRoute from './routes/schoolclass.route';
 
 validateEnv();
 
-const app = new App([new IndexRoute(), new UsersRoute(), new BooksRoute(), new BookInventoriesRoute(), new SchoolClassRoute(), new AuthRoute()]);
+const app = new App([
+  new IndexRoute(),
+  new UsersRoute(),
+  new BooksRoute(),
+  new BookInventoriesRoute(),
+  new SchoolClassRoute(),
+  new AuthRoute(),
+  new NotFoundRoute(),
+]);
 
 app.listen();
