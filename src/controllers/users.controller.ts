@@ -3,6 +3,7 @@ import { CreateUserDto, UserResultDto } from '@dtos/users.dto';
 import { User } from '@interfaces/users.interface';
 import userService from '@services/users.service';
 import { mapToDto } from '@/utils/mapToDto';
+import { ResponseContainerDto } from '@/dtos/response.dto';
 
 class UsersController {
   public userService = new userService();
@@ -12,9 +13,9 @@ class UsersController {
       const findAllUsersData: User[] = await this.userService.findAllUser();
       try {
         const dto = mapToDto(findAllUsersData, UserResultDto);
-        res.status(200).json({ data: dto, message: 'findAll' });
+        res.status(200).json(new ResponseContainerDto(req, dto, 'findAll'));
       } catch (error) {
-        res.status(200).json({ data: [], message: 'findAll' });
+        res.status(200).json(new ResponseContainerDto(req, [], 'findAll'));
       }
     } catch (error) {
       next(error);
@@ -27,7 +28,7 @@ class UsersController {
       const findOneUserData: User = await this.userService.findUserById(userId);
 
       const dto = mapToDto(findOneUserData, UserResultDto);
-      res.status(200).json({ data: dto, message: 'findOne' });
+      res.status(200).json(new ResponseContainerDto(req, dto, 'findOne'));
     } catch (error) {
       next(error);
     }
@@ -40,7 +41,7 @@ class UsersController {
 
       const dto = mapToDto(createUserData, UserResultDto);
 
-      res.status(201).json({ data: dto, message: 'created' });
+      res.status(201).json(new ResponseContainerDto(req, dto, 'created'));
     } catch (error) {
       next(error);
     }
@@ -53,7 +54,7 @@ class UsersController {
       const updateUserData: User = await this.userService.updateUser(userId, userData);
       const dto = mapToDto(updateUserData, UserResultDto);
 
-      res.status(200).json({ data: dto, message: 'updated' });
+      res.status(200).json(new ResponseContainerDto(req, dto, 'updated'));
     } catch (error) {
       next(error);
     }
@@ -65,7 +66,7 @@ class UsersController {
       const deleteUserData: User = await this.userService.deleteUser(userId);
       const dto = mapToDto(deleteUserData, UserResultDto);
 
-      res.status(200).json({ data: dto, message: 'deleted' });
+      res.status(200).json(new ResponseContainerDto(req, dto, 'deleted'));
     } catch (error) {
       next(error);
     }

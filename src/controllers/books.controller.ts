@@ -4,6 +4,7 @@ import { mapToDto, MultipleChildrenMapper } from '@/utils/mapToDto';
 import { Book } from '@/interfaces/books.interface';
 import { BookResultDto, CreateBookDto } from '@/dtos/books.dto';
 import { UserResultDto } from '@/dtos/users.dto';
+import { ResponseContainerDto } from '@/dtos/response.dto';
 
 const childMapper: MultipleChildrenMapper<BookResultDto> = [
   {
@@ -20,9 +21,9 @@ class UsersController {
       const findAllBooksData: Book[] = await this.bookService.findAllBook();
       try {
         const dto = mapToDto<Book, BookResultDto>(findAllBooksData, BookResultDto, childMapper);
-        res.status(200).json({ data: dto, message: 'findAll' });
+        res.status(200).json(new ResponseContainerDto(req, dto, 'findAll'));
       } catch (error) {
-        res.status(200).json({ data: [], message: 'findAll' });
+        res.status(200).json(new ResponseContainerDto(req, [], 'findAll'));
       }
     } catch (error) {
       next(error);
@@ -35,7 +36,7 @@ class UsersController {
       const findOneBookData: Book = await this.bookService.findBookById(isbn);
       const dto = mapToDto<Book, BookResultDto>(findOneBookData, BookResultDto, childMapper);
 
-      res.status(200).json({ data: dto, message: 'findOne' });
+      res.status(200).json(new ResponseContainerDto(req, dto, 'findOne'));
     } catch (error) {
       next(error);
     }
@@ -47,7 +48,7 @@ class UsersController {
       const createBookData: Book = await this.bookService.createBook(bookData);
       const dto = mapToDto<Book, BookResultDto>(createBookData, BookResultDto, childMapper);
 
-      res.status(201).json({ data: dto, message: 'created' });
+      res.status(201).json(new ResponseContainerDto(req, dto, 'created'));
     } catch (error) {
       next(error);
     }
@@ -60,7 +61,7 @@ class UsersController {
       const updateBookData: Book = await this.bookService.updateBook(isbn, userData);
       const dto = mapToDto<Book, BookResultDto>(updateBookData, BookResultDto, childMapper);
 
-      res.status(200).json({ data: dto, message: 'updated' });
+      res.status(200).json(new ResponseContainerDto(req, dto, 'updated'));
     } catch (error) {
       next(error);
     }
@@ -72,7 +73,7 @@ class UsersController {
       const deleteBookData: Book = await this.bookService.deleteBook(isbn);
       const dto = mapToDto<Book, BookResultDto>(deleteBookData, BookResultDto, childMapper);
 
-      res.status(200).json({ data: dto, message: 'deleted' });
+      res.status(200).json(new ResponseContainerDto(req, dto, 'deleted'));
     } catch (error) {
       next(error);
     }

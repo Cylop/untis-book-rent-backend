@@ -16,7 +16,7 @@ Content-Type: application/json
 ##978-3-1057-5285-2
 
 {
-    "isbn": "978-7-8564-7719-4",
+    "isbn": "978-7-8564-7719-4-4",
     "title": "Random test",
     "description": "Random book description",
     "imageUrl": "https://google.at",
