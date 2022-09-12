@@ -3,7 +3,14 @@ import BookService from '@services/books.service';
 import { mapToDto, MultipleChildrenMapper } from '@/utils/mapToDto';
 import { Book } from '@/interfaces/books.interface';
 import { BookResultDto, CreateBookDto } from '@/dtos/books.dto';
-import { CreateUserDto } from '@/dtos/users.dto';
+import { UserResultDto } from '@/dtos/users.dto';
+
+const childMapper: MultipleChildrenMapper<BookResultDto> = [
+  {
+    field: 'createdBy',
+    dto: UserResultDto,
+  },
+];
 
 class UsersController {
   public bookService = new BookService();
@@ -12,13 +19,6 @@ class UsersController {
     try {
       const findAllBooksData: Book[] = await this.bookService.findAllBook();
       try {
-        const childMapper: MultipleChildrenMapper<BookResultDto> = [
-          {
-            field: 'createdBy',
-            dto: CreateUserDto,
-          },
-        ];
-
         const dto = mapToDto<Book, BookResultDto>(findAllBooksData, BookResultDto, childMapper);
         res.status(200).json({ data: dto, message: 'findAll' });
       } catch (error) {
@@ -33,7 +33,7 @@ class UsersController {
     try {
       const userId = Number(req.params.id);
       const findOneBookData: Book = await this.bookService.findBookById(userId);
-      const dto = mapToDto(findOneBookData, BookResultDto);
+      const dto = mapToDto<Book, BookResultDto>(findOneBookData, BookResultDto, childMapper);
 
       res.status(200).json({ data: dto, message: 'findOne' });
     } catch (error) {
@@ -45,7 +45,7 @@ class UsersController {
     try {
       const userData: CreateBookDto = req.body;
       const createBookData: Book = await this.bookService.createBook(userData);
-      const dto = mapToDto(createBookData, BookResultDto);
+      const dto = mapToDto<Book, BookResultDto>(createBookData, BookResultDto, childMapper);
 
       res.status(201).json({ data: dto, message: 'created' });
     } catch (error) {
@@ -58,7 +58,7 @@ class UsersController {
       const isbn = String(req.params.isbn);
       const userData: CreateBookDto = req.body;
       const updateBookData: Book = await this.bookService.updateBook(isbn, userData);
-      const dto = mapToDto(updateBookData, BookResultDto);
+      const dto = mapToDto<Book, BookResultDto>(updateBookData, BookResultDto, childMapper);
 
       res.status(200).json({ data: dto, message: 'updated' });
     } catch (error) {
@@ -70,7 +70,7 @@ class UsersController {
     try {
       const isbn = String(req.params.id);
       const deleteBookData: Book = await this.bookService.deleteBook(isbn);
-      const dto = mapToDto(deleteBookData, BookResultDto);
+      const dto = mapToDto<Book, BookResultDto>(deleteBookData, BookResultDto, childMapper);
 
       res.status(200).json({ data: dto, message: 'deleted' });
     } catch (error) {

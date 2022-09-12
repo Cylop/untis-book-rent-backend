@@ -1,5 +1,4 @@
-import { IsDate, IsNotEmpty, IsOptional, IsString, IsUrl } from 'class-validator';
-import { BaseEntity, Entity, Column, CreateDateColumn, UpdateDateColumn, PrimaryColumn, ManyToOne, Unique } from 'typeorm';
+import { BaseEntity, Entity, Column, CreateDateColumn, UpdateDateColumn, PrimaryColumn, ManyToOne } from 'typeorm';
 import { Book } from '@/interfaces/books.interface';
 import { UserEntity } from './users.entity';
 
@@ -8,24 +7,19 @@ export class BookEntity extends BaseEntity implements Book {
   @PrimaryColumn({ unique: true })
   isbn: string;
 
-  @IsNotEmpty()
-  @IsString()
+  @Column()
   title: string;
 
-  @IsString()
-  @IsOptional()
+  @Column({ nullable: true })
   description: string;
 
-  @IsUrl()
-  @IsOptional()
+  @Column({ nullable: true })
   imageUrl: string;
 
-  @IsString()
-  @IsOptional()
+  @Column({ nullable: true })
   publisher: string;
 
-  @IsDate()
-  @IsOptional()
+  @Column({ nullable: true })
   publishingDate: Date;
 
   @ManyToOne(() => UserEntity, { eager: true })

@@ -18,13 +18,13 @@ export function mapToDto<Y, T extends BaseDto | BaseEntity>(
 }
 
 const mapSingle = <Y, T extends BaseDto | BaseEntity>(value: Y, resultDto: Newable<T>, childrenMapper?: MultipleChildrenMapper<T>): T => {
-  let result = plainToInstance(resultDto, instanceToPlain(value), { excludeExtraneousValues: true }) as T;
+  let result = plainToInstance(resultDto, instanceToPlain(value), { excludeExtraneousValues: true, exposeUnsetFields: false }) as T;
   if (!childrenMapper) return result;
 
   for (let i = 0; i < childrenMapper.length; i++) {
     const mapper = childrenMapper[i];
     const fieldValue = result[mapper.field];
-    const mappedValue = plainToInstance(mapper.dto, instanceToPlain(fieldValue), {
+    const mappedValue = plainToInstance(mapper.dto, instanceToPlain(fieldValue, { exposeUnsetFields: false }), {
       excludeExtraneousValues: true,
     }) as typeof mapper.dto;
     result = { ...result, [mapper.field]: mappedValue };

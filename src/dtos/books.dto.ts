@@ -1,4 +1,3 @@
-import { User } from '@/interfaces/users.interface';
 import { Exclude, Expose } from 'class-transformer';
 import { IsDate, IsISBN, IsNumber, IsOptional, IsString, IsUrl } from 'class-validator';
 import { BaseDto } from './base.dto';
@@ -11,19 +10,19 @@ export class CreateBookDto implements BaseDto {
   @IsString()
   public title: string;
 
-  @IsString()
   @IsOptional()
+  @IsString()
   public description: string;
 
-  @IsUrl()
   @IsOptional()
+  @IsUrl()
   public imageUrl: string;
 
   @IsString()
   public publisher: string;
 
-  @IsDate()
   @IsOptional()
+  @IsDate()
   public publishingDate: Date;
 
   @IsNumber()
