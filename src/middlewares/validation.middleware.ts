@@ -1,8 +1,10 @@
 import { plainToInstance } from 'class-transformer';
 import { validate, ValidationError } from 'class-validator';
 import { RequestHandler } from 'express';
-import { HttpException } from '@exceptions/HttpException';
 import { ValidationException } from '@/exceptions/ValidationException';
+import { OmitStrict } from '@/shared/types/general.types';
+
+type ProperValidationError = OmitStrict<ValidationError, 'target' | 'toString'>;
 
 const validationMiddleware = (
   type: any,
@@ -12,7 +14,14 @@ const validationMiddleware = (
   forbidNonWhitelisted = true,
 ): RequestHandler => {
   return (req, res, next) => {
-    validate(plainToInstance(type, req[value]), { skipMissingProperties, whitelist, forbidNonWhitelisted }).then((errors: ValidationError[]) => {
+    validate(plainToInstance(type, req[value]), {
+      skipMissingProperties,
+      whitelist,
+      forbidNonWhitelisted,
+      validationError: {
+        target: false,
+      },
+    }).then((errors: ProperValidationError[]) => {
       if (errors.length > 0) {
         next(new ValidationException(400, 'Error in Validation', errors));
         return;
