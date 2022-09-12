@@ -1,0 +1,36 @@
+# baseURL
+@baseURL = http://localhost:3000
+
+###
+# Find All Classes
+GET {{ baseURL }}/classes
+
+###
+# Find Class By Id
+GET {{ baseURL }}/classes/1
+
+###
+# Create Class
+POST {{ baseURL }}/classes
+Content-Type: application/json
+
+{
+    "name": "1AB",
+    "label": "Erste AB",
+    "studentCount": 14
+}
+
+###
+# Modify Class By Id
+PUT {{ baseURL }}/classes/1
+Content-Type: application/json
+
+{
+    "name": "1AB",
+    "label": "Erste AB",
+    "studentCount": 12
+}
+
+###
+# Delete Class By Id
+DELETE {{ baseURL }}/classes/1

@@ -46,6 +46,8 @@ class BookService extends Repository<BookEntity> {
     const findUser: User = await UserEntity.findOne({ where: { id: bookData.createdBy } });
     if (!findUser) throw new HttpException(409, "User doesn't exist");
 
+    await BookEntity.update(isbn, { ...bookData, createdBy: findUser });
+
     const updateBook: Book = await BookEntity.findOne({ where: { isbn } });
     return updateBook;
   }
