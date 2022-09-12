@@ -1,20 +1,19 @@
-import { Expose } from 'class-transformer';
 import { Request } from 'express';
 import { BaseDto } from './base.dto';
 
 export type ResponseStatus = 'OK' | 'ERROR';
 
-export abstract class AbstractResponseContainer {
+export abstract class AbstractResponseContainer extends BaseDto {
   public path: string;
   public status: ResponseStatus;
 
   constructor(req: Request) {
+    super();
     this.path = req.path;
   }
 }
 
-@Expose()
-export class ResponseContainerDto<T> extends AbstractResponseContainer implements BaseDto {
+export class ResponseContainerDto<T> extends AbstractResponseContainer {
   public data: T;
   public message: string;
 
@@ -26,8 +25,7 @@ export class ResponseContainerDto<T> extends AbstractResponseContainer implement
   }
 }
 
-@Expose()
-export class ErrorResponseContainerDto extends AbstractResponseContainer implements BaseDto {
+export class ErrorResponseContainerDto extends AbstractResponseContainer {
   public error: Error;
 
   constructor(req: Request, error: Error) {

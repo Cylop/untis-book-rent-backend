@@ -1,2 +1,1 @@
-/* eslint-disable @typescript-eslint/no-empty-interface */
-export interface BaseDto {}
+export abstract class BaseDto {}

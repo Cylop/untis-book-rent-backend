@@ -1,9 +1,9 @@
-import { Exclude, Expose } from 'class-transformer';
+import { Expose } from 'class-transformer';
 import { IsDate, IsISBN, IsNumber, IsOptional, IsString, IsUrl } from 'class-validator';
 import { BaseDto } from './base.dto';
 import { UserResultDto } from './users.dto';
 
-export class CreateBookDto implements BaseDto {
+export class CreateBookDto extends BaseDto {
   @IsISBN()
   public isbn: string;
 
@@ -29,20 +29,12 @@ export class CreateBookDto implements BaseDto {
   public createdBy: number;
 }
 
-@Exclude()
-export class BookResultDto implements BaseDto {
-  @Expose()
-  public isbn: string;
-  @Expose()
-  public title: string;
-  @Expose()
-  public description: string;
-  @Expose()
-  public imageUrl: string;
-  @Expose()
-  public publisher: string;
-  @Expose()
-  public publishingDate: Date;
-  @Expose()
-  public createdBy: UserResultDto;
+export class BookResultDto extends BaseDto {
+  @Expose() public isbn: string;
+  @Expose() public title: string;
+  @Expose() public description: string;
+  @Expose() public imageUrl: string;
+  @Expose() public publisher: string;
+  @Expose() public publishingDate: Date;
+  @Expose() public createdBy: UserResultDto;
 }
