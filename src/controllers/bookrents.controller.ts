@@ -38,10 +38,13 @@ class BookRentsController {
   public getBookRentByIsbnAndClass = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
     try {
       const { isbn, classNum } = req.params;
-      const findOneBookData: BookRent = await this.bookRentService.findBookRentById(isbn, Number(classNum));
-      const dto = mapToDto<BookRent, BookRentResultDto>(findOneBookData, BookRentResultDto, childMapper);
-
-      res.status(200).json(new ResponseContainerDto(req, dto, 'findOne'));
+      const findAllBookData: BookRent[] = await this.bookRentService.findBookRentById(isbn, Number(classNum));
+      try {
+        const dto = mapToDto<BookRent, BookRentResultDto>(findAllBookData, BookRentResultDto, childMapper);
+        res.status(200).json(new ResponseContainerDto(req, dto, 'findMany'));
+      } catch (error) {
+        res.status(200).json(new ResponseContainerDto(req, [], 'findMany'));
+      }
     } catch (error) {
       next(error);
     }
