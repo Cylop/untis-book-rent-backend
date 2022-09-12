@@ -14,9 +14,6 @@ export class CreateBookRentDto extends BaseDto {
   @IsISBN()
   public isbn: string;
 
-  @IsNumber()
-  public classNum: number;
-
   @IsEnum(RentStatus)
   public status: RentStatus;
 
@@ -24,6 +21,9 @@ export class CreateBookRentDto extends BaseDto {
   @Min(0)
   @Max(999_999)
   public amount: number;
+
+  @IsNumber()
+  public classNum: number;
 
   @IsNumber({ maxDecimalPlaces: 0 })
   @Min(0)
@@ -54,8 +54,8 @@ export class DeleteBookRentDto extends BaseDto {
 
 export class BookRentResultDto extends BaseDto {
   @Expose() public isbn: string;
-  @Expose() public classNum: SchoolClass;
   @Expose() public status: RentStatus;
   @Expose() public amount: number;
+  @Expose() public classNum: SchoolClass;
   @Expose() public rentedBy: User;
 }
