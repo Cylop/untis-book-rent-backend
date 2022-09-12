@@ -13,7 +13,7 @@ const childMapper: MultipleChildrenMapper<BookResultDto> = [
   },
 ];
 
-class UsersController {
+class BooksController {
   public bookService = new BookService();
 
   public getBooks = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
@@ -57,8 +57,8 @@ class UsersController {
   public updateBook = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
     try {
       const isbn = String(req.params.isbn);
-      const userData: CreateBookDto = req.body;
-      const updateBookData: Book = await this.bookService.updateBook(isbn, userData);
+      const bookData: CreateBookDto = req.body;
+      const updateBookData: Book = await this.bookService.updateBook(isbn, bookData);
       const dto = mapToDto<Book, BookResultDto>(updateBookData, BookResultDto, childMapper);
 
       res.status(200).json(new ResponseContainerDto(req, dto, 'updated'));
@@ -80,4 +80,4 @@ class UsersController {
   };
 }
 
-export default UsersController;
+export default BooksController;

@@ -1,5 +1,5 @@
 import { Expose } from 'class-transformer';
-import { IsDate, IsDateString, IsISBN, IsNumber, IsOptional, IsString, IsUrl } from 'class-validator';
+import { IsDateString, IsISBN, IsNumber, IsOptional, IsString, IsUrl } from 'class-validator';
 import { BaseDto } from './base.dto';
 import { UserResultDto } from './users.dto';
 
