@@ -14,7 +14,7 @@ class BookService extends Repository<BookEntity> {
     return books;
   }
 
-  public async findBookById(isbn: number): Promise<Book> {
+  public async findBookById(isbn: string): Promise<Book> {
     if (isEmpty(isbn)) throw new HttpException(400, 'Isbn is empty');
 
     const findBook: Book = await BookEntity.findOne({ where: { isbn: isbn } });

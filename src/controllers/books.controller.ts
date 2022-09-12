@@ -31,8 +31,8 @@ class UsersController {
 
   public getBookById = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
     try {
-      const userId = Number(req.params.id);
-      const findOneBookData: Book = await this.bookService.findBookById(userId);
+      const isbn = String(req.params.isbn);
+      const findOneBookData: Book = await this.bookService.findBookById(isbn);
       const dto = mapToDto<Book, BookResultDto>(findOneBookData, BookResultDto, childMapper);
 
       res.status(200).json({ data: dto, message: 'findOne' });
@@ -43,8 +43,8 @@ class UsersController {
 
   public createBook = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
     try {
-      const userData: CreateBookDto = req.body;
-      const createBookData: Book = await this.bookService.createBook(userData);
+      const bookData: CreateBookDto = req.body;
+      const createBookData: Book = await this.bookService.createBook(bookData);
       const dto = mapToDto<Book, BookResultDto>(createBookData, BookResultDto, childMapper);
 
       res.status(201).json({ data: dto, message: 'created' });
@@ -68,7 +68,7 @@ class UsersController {
 
   public deleteBook = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
     try {
-      const isbn = String(req.params.id);
+      const isbn = String(req.params.isbn);
       const deleteBookData: Book = await this.bookService.deleteBook(isbn);
       const dto = mapToDto<Book, BookResultDto>(deleteBookData, BookResultDto, childMapper);
 

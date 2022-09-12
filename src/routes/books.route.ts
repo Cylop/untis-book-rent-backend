@@ -15,10 +15,10 @@ class BooksRoute implements Routes {
 
   private initializeRoutes() {
     this.router.get(`${this.path}`, this.booksController.getBooks);
-    this.router.get(`${this.path}/:id(\\d+)`, this.booksController.getBookById);
+    this.router.get(`${this.path}/:isbn(\\d+)`, this.booksController.getBookById);
     this.router.post(`${this.path}`, validationMiddleware(CreateBookDto, 'body'), this.booksController.createBook);
-    this.router.put(`${this.path}/:id(\\d+)`, validationMiddleware(CreateBookDto, 'body', true), this.booksController.updateBook);
-    this.router.delete(`${this.path}/:id(\\d+)`, this.booksController.deleteBook);
+    this.router.put(`${this.path}/:isbn(\\d+)`, validationMiddleware(CreateBookDto, 'body', true), this.booksController.updateBook);
+    this.router.delete(`${this.path}/:isbn(\\d+)`, this.booksController.deleteBook);
   }
 }
 
