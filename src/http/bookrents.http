@@ -7,7 +7,11 @@
 GET {{ baseURL }}/{{ endpoint }}
 
 ###
-# Find Books Rent By Isbn and classNum
+# Find rented books for class by classNum
+GET {{ baseURL }}/{{ endpoint }}/1
+
+###
+# Find Book rent by Isbn and classNum
 GET {{ baseURL }}/{{ endpoint }}/978-7-8564-7719-4/1
 
 ###
@@ -25,13 +29,12 @@ Content-Type: application/json
 }
 
 ###
-# Modify Book Inventory By Isbn
-PUT {{ baseURL }}/{{ endpoint }}/978-7-8564-7719-4
+# Modify Book Rent By Isbn and class
+PUT {{ baseURL }}/{{ endpoint }}/978-7-8564-7719-4/1
 Content-Type: application/json
 
 {
-    "isbn": "978-7-8564-7719-4",
-    "amount": 40
+    "status": "done"
 }
 
 ###

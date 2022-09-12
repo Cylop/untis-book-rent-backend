@@ -13,6 +13,7 @@ class BookRentsRoute extends ApiRouter {
 
   private initializeRoutes() {
     this.router.get('/', this.bookRentsController.getBookRents);
+    this.router.get('/:classNum', this.bookRentsController.getBookRentByClass);
     this.router.get('/:isbn/:classNum', this.bookRentsController.getBookRentByIsbnAndClass);
     this.router.post('/', validationMiddleware(CreateBookRentDto, 'body'), this.bookRentsController.createBookRent);
     this.router.put('/:isbn/:classNum', validationMiddleware(UpdateBookRentDto, 'body', true), this.bookRentsController.updateBookRent);

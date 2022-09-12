@@ -16,12 +16,19 @@ class BookRentService extends Repository<BookRentEntity> {
     return books;
   }
 
-  public async findBookRentById(isbn: string, classNum: number): Promise<BookRent[]> {
+  public async findBookRentById(isbn: string, classNum: number): Promise<BookRent> {
     if (isEmpty(isbn)) throw new HttpException(400, 'Isbn is empty');
 
-    const findBookRent: BookRent[] = await BookRentEntity.find({ where: { isbn, classNum } });
+    const findBookRent: BookRent = await BookRentEntity.findOne({ where: { isbn, classNum } });
     if (!findBookRent) throw new HttpException(409, "Book rent doesn't exist");
 
+    return findBookRent;
+  }
+
+  public async findBookRentByClass(classNum: number): Promise<BookRent[]> {
+    if (isEmpty(classNum)) throw new HttpException(400, 'ClassId is empty');
+
+    const findBookRent: BookRent[] = await BookRentEntity.find({ where: { classNum } });
     return findBookRent;
   }
 

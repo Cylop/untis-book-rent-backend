@@ -35,12 +35,27 @@ class BookRentsController {
     }
   };
 
+  public getBookRentByClass = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
+    try {
+      const { classNum } = req.params;
+      const findAllBookData: BookRent[] = await this.bookRentService.findBookRentByClass(Number(classNum));
+      try {
+        const dto = mapToDto<BookRent, BookRentResultDto>(findAllBookData, BookRentResultDto, childMapper);
+        res.status(200).json(new ResponseContainerDto(req, dto, 'findMany'));
+      } catch (error) {
+        res.status(200).json(new ResponseContainerDto(req, [], 'findMany'));
+      }
+    } catch (error) {
+      next(error);
+    }
+  };
+
   public getBookRentByIsbnAndClass = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
     try {
       const { isbn, classNum } = req.params;
-      const findAllBookData: BookRent[] = await this.bookRentService.findBookRentById(isbn, Number(classNum));
+      const findBookData: BookRent = await this.bookRentService.findBookRentById(isbn, Number(classNum));
       try {
-        const dto = mapToDto<BookRent, BookRentResultDto>(findAllBookData, BookRentResultDto, childMapper);
+        const dto = mapToDto<BookRent, BookRentResultDto>(findBookData, BookRentResultDto, childMapper);
         res.status(200).json(new ResponseContainerDto(req, dto, 'findMany'));
       } catch (error) {
         res.status(200).json(new ResponseContainerDto(req, [], 'findMany'));
