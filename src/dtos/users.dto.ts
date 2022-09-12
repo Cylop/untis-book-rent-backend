@@ -1,7 +1,8 @@
 import { Exclude, Expose } from 'class-transformer';
 import { IsEmail, IsString } from 'class-validator';
+import { BaseDto } from './base.dto';
 
-export class CreateUserDto {
+export class CreateUserDto implements BaseDto {
   @IsString()
   public name: string;
 
@@ -12,7 +13,7 @@ export class CreateUserDto {
   public password: string;
 }
 
-export class LoginUserDto {
+export class LoginUserDto implements BaseDto {
   @IsEmail()
   public email: string;
 
@@ -21,7 +22,7 @@ export class LoginUserDto {
 }
 
 @Exclude()
-export class UserResultDto {
+export class UserResultDto implements BaseDto {
   @Expose()
   public id: number;
 

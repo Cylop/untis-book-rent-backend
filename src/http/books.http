@@ -1,0 +1,42 @@
+# baseURL
+@baseURL = http://localhost:3000
+
+###
+# Find All Books
+GET {{ baseURL }}/books
+
+###
+# Find Book By Isbn
+GET {{ baseURL }}/books/978-3-1057-5285-2
+
+###
+# Create Book
+POST {{ baseURL }}/books
+Content-Type: application/json
+
+{
+    "isbn": "978-3-1057-5285-2",
+    "title": "Random test",
+    "description": "Random book description",
+    "imageUrl": "https://google.at",
+    "publisher": "Random Lmt",
+    "createdBy": 3
+}
+
+###
+# Modify Book By Isbn
+PUT {{ baseURL }}/books/978-3-1057-5285-2
+Content-Type: application/json
+
+{
+    "isbn": "978-3-1057-5285-2",
+    "title": "Random test 2",
+    "description": "Random book description 2",
+    "imageUrl": "https://google.at/2",
+    "publisher": "Random Lmt",
+    "createdBy": 1
+}
+
+###
+# Delete Book By Isbn
+DELETE {{ baseURL }}/books/978-3-1057-5285-2

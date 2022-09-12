@@ -10,9 +10,12 @@ class UsersController {
   public getUsers = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
     try {
       const findAllUsersData: User[] = await this.userService.findAllUser();
-      const dto = mapToDto(findAllUsersData, UserResultDto);
-
-      res.status(200).json({ data: dto, message: 'findAll' });
+      try {
+        const dto = mapToDto(findAllUsersData, UserResultDto);
+        res.status(200).json({ data: dto, message: 'findAll' });
+      } catch (error) {
+        res.status(200).json({ data: [], message: 'findAll' });
+      }
     } catch (error) {
       next(error);
     }
@@ -22,8 +25,8 @@ class UsersController {
     try {
       const userId = Number(req.params.id);
       const findOneUserData: User = await this.userService.findUserById(userId);
-      const dto = mapToDto(findOneUserData, UserResultDto);
 
+      const dto = mapToDto(findOneUserData, UserResultDto);
       res.status(200).json({ data: dto, message: 'findOne' });
     } catch (error) {
       next(error);
@@ -34,6 +37,7 @@ class UsersController {
     try {
       const userData: CreateUserDto = req.body;
       const createUserData: User = await this.userService.createUser(userData);
+
       const dto = mapToDto(createUserData, UserResultDto);
 
       res.status(201).json({ data: dto, message: 'created' });
