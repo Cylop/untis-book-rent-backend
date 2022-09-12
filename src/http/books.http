@@ -1,17 +1,18 @@
 # baseURL
-@baseURL = http://localhost:3000
+@baseURL = http://localhost:3000/api/v1
+@endpoint = books
 
 ###
 # Find All Books
-GET {{ baseURL }}/books
+GET {{ baseURL }}/{{ endpoint }}
 
 ###
 # Find Book By Isbn
-GET {{ baseURL }}/books/978-3-1057-5285-2
+GET {{ baseURL }}/{{ endpoint }}/978-3-1057-5285-2
 
 ###
 # Create Book
-POST {{ baseURL }}/books
+POST {{ baseURL }}/{{ endpoint }}
 Content-Type: application/json
 ##978-3-1057-5285-2
 
@@ -27,7 +28,7 @@ Content-Type: application/json
 
 ###
 # Modify Book By Isbn
-PUT {{ baseURL }}/books/978-3-1057-5285-2
+PUT {{ baseURL }}/{{ endpoint }}/978-3-1057-5285-2
 Content-Type: application/json
 
 {
@@ -41,4 +42,4 @@ Content-Type: application/json
 
 ###
 # Delete Book By Isbn
-DELETE {{ baseURL }}/books/978-3-1057-5285-2
+DELETE {{ baseURL }}/{{ endpoint }}/978-3-1057-5285-2

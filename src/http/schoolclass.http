@@ -1,17 +1,18 @@
 # baseURL
-@baseURL = http://localhost:3000
+@baseURL = http://localhost:3000/api/v1
+@endpoint = classes
 
 ###
 # Find All Classes
-GET {{ baseURL }}/classes
+GET {{ baseURL }}/{{ endpoint }}
 
 ###
 # Find Class By Id
-GET {{ baseURL }}/classes/1
+GET {{ baseURL }}/{{ endpoint }}/1
 
 ###
 # Create Class
-POST {{ baseURL }}/classes
+POST {{ baseURL }}/{{ endpoint }}
 Content-Type: application/json
 
 {
@@ -22,7 +23,7 @@ Content-Type: application/json
 
 ###
 # Modify Class By Id
-PUT {{ baseURL }}/classes/1
+PUT {{ baseURL }}/{{ endpoint }}/1
 Content-Type: application/json
 
 {
@@ -33,4 +34,4 @@ Content-Type: application/json
 
 ###
 # Delete Class By Id
-DELETE {{ baseURL }}/classes/1
+DELETE {{ baseURL }}/{{ endpoint }}/1

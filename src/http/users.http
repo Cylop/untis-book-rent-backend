@@ -1,17 +1,18 @@
 # baseURL
-@baseURL = http://localhost:3000
+@baseURL = http://localhost:3000/api/v1
+@endpoint = users
 
 ###
 # Find All Users
-GET {{ baseURL }}/users
+GET {{ baseURL }}/{{ endpoint }}
 
 ###
 # Find User By Id
-GET {{ baseURL }}/users/1
+GET {{ baseURL }}/{{ endpoint }}/1
 
 ###
 # Create User
-POST {{ baseURL }}/users
+POST {{ baseURL }}/{{ endpoint }}
 Content-Type: application/json
 
 {
@@ -22,7 +23,7 @@ Content-Type: application/json
 
 ###
 # Modify User By Id
-PUT {{ baseURL }}/users/1
+PUT {{ baseURL }}/{{ endpoint }}/1
 Content-Type: application/json
 
 {
@@ -32,4 +33,4 @@ Content-Type: application/json
 
 ###
 # Delete User By Id
-DELETE {{ baseURL }}/users/2
+DELETE {{ baseURL }}/{{ endpoint }}/2

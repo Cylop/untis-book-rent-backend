@@ -9,7 +9,7 @@ export abstract class AbstractResponseContainer extends BaseDto {
 
   constructor(req: Request) {
     super();
-    this.path = req.path;
+    this.path = req.baseUrl;
   }
 }
 
@@ -32,5 +32,6 @@ export class ErrorResponseContainerDto extends AbstractResponseContainer {
     super(req);
     this.status = 'ERROR';
     this.error = error;
+    this.path = req.path;
   }
 }
