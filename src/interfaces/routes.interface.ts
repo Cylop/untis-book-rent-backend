@@ -1,4 +1,4 @@
-import { Router } from 'express';
+import { RequestHandler, Router } from 'express';
 
 export interface Routes {
   path?: string;
@@ -14,7 +14,7 @@ export abstract class ApiRouter implements Routes {
     this.router = Router();
   }
 
-  public registerRoute(parentRouter: Router, middlewares: [] = []) {
+  public registerRoute(parentRouter: Router, middlewares: RequestHandler[] = []) {
     parentRouter.use(this.path, ...middlewares, this.router);
   }
 }

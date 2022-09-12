@@ -1,4 +1,5 @@
 import { ApiRouter } from '@/interfaces/routes.interface';
+import authMiddleware from '@/middlewares/auth.middleware';
 import BookInventoriesRoute from './bookinventories.route';
 import BooksRoute from './books.route';
 import SchoolClassRoute from './schoolclass.route';
@@ -9,12 +10,11 @@ const API_ROUTES = [new UsersRoute(), new BooksRoute(), new BookInventoriesRoute
 class V1Route extends ApiRouter {
   constructor() {
     super('/v1');
-
     this.registerVersionRoutes();
   }
 
   private registerVersionRoutes() {
-    API_ROUTES.forEach(router => router.registerRoute(this.router));
+    API_ROUTES.forEach(router => router.registerRoute(this.router, [authMiddleware]));
   }
 }
 
