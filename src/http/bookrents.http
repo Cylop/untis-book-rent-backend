@@ -1,0 +1,42 @@
+# baseURL
+@baseURL = http://localhost:3000/api/v1
+@endpoint = book-rents
+
+###
+# Find All Book Inventories
+GET {{ baseURL }}/{{ endpoint }}
+
+###
+# Find rented books for class by classNum
+GET {{ baseURL }}/{{ endpoint }}/1
+
+###
+# Find Book rent by Isbn and classNum
+GET {{ baseURL }}/{{ endpoint }}/978-7-8564-7719-4/1
+
+###
+# Create Book Rent
+POST {{ baseURL }}/{{ endpoint }}
+Content-Type: application/json
+##978-3-1057-5285-2
+
+{
+    "isbn": "978-7-8564-7719-4",
+    "classNum": 1,
+    "status": "rented",
+    "rentedBy": 3,
+    "amount": 50
+}
+
+###
+# Modify Book Rent By Isbn and class
+PUT {{ baseURL }}/{{ endpoint }}/978-7-8564-7719-4/1
+Content-Type: application/json
+
+{
+    "status": "done"
+}
+
+###
+# Delete Book By Isbn
+DELETE {{ baseURL }}/{{ endpoint }}/978-7-8564-7719-4
