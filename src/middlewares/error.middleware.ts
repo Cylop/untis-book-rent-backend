@@ -5,8 +5,8 @@ import { ErrorResponseContainerDto } from '@/dtos/response.dto';
 
 const errorMiddleware = (error: HttpException, req: Request, res: Response, next: NextFunction) => {
   try {
-    const status: number = error.status || 500;
-    const message: string = error.message || 'Something went wrong';
+    const status: number = error?.status ?? 500;
+    const message: string = error?.message ?? 'Something went wrong';
 
     error = { ...error, status, message };
 

@@ -17,13 +17,8 @@ Content-Type: application/json
 ##978-3-1057-5285-2
 
 {
-    "isbn": "978-7-8564-7719-4",
-    "title": "Random test",
-    "description": "Random book description",
-    "imageUrl": "https://google.at",
-    "publisher": "Random Lmt",
-    "createdBy": 3,
-    "publishingDate":"2022-09-12T09:34:07.370Z"
+    "isbn": "979-8491855216",
+    "createdBy": 4
 }
 
 ###
@@ -33,11 +28,7 @@ Content-Type: application/json
 
 {
     "isbn": "978-3-1057-5285-2",
-    "title": "Random test 2",
-    "description": "Random book description 2",
-    "imageUrl": "https://google.at/2",
-    "publisher": "Random Lmt",
-    "createdBy": 1
+    "amount": 10
 }
 
 ###
