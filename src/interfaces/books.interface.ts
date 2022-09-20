@@ -15,4 +15,5 @@ export interface Book {
   pages: number;
   authors: string[];
   createdBy: User;
+  amount: number;
 }
