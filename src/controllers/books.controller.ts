@@ -2,7 +2,7 @@ import { NextFunction, Request, Response } from 'express';
 import BookService from '@services/books.service';
 import { mapToDto, MultipleChildrenMapper } from '@/utils/mapToDto';
 import { Book } from '@/interfaces/books.interface';
-import { BookResultDto, CreateBookDto } from '@/dtos/books.dto';
+import { BookResultDto, CreateBookDto, UpdateBookDto } from '@/dtos/books.dto';
 import { UserResultDto } from '@/dtos/users.dto';
 import { ResponseContainerDto } from '@/dtos/response.dto';
 
@@ -57,7 +57,7 @@ class BooksController {
   public updateBook = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
     try {
       const isbn = String(req.params.isbn);
-      const bookData: CreateBookDto = req.body;
+      const bookData: UpdateBookDto = req.body;
       const updateBookData: Book = await this.bookService.updateBook(isbn, bookData);
       const dto = mapToDto<Book, BookResultDto>(updateBookData, BookResultDto, childMapper);
 
