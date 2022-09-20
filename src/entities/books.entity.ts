@@ -4,14 +4,20 @@ import { UserEntity } from './users.entity';
 
 @Entity()
 export class BookEntity extends BaseEntity implements Book {
-  @PrimaryColumn({ unique: true })
-  isbn: string;
+  @PrimaryColumn()
+  id: string;
+
+  @Column({ unique: true })
+  isbn10: string;
+
+  @Column({ unique: true })
+  isbn13: string;
 
   @Column()
   title: string;
 
-  @Column({ nullable: true })
-  description: string;
+  @Column()
+  titleLong: string;
 
   @Column({ nullable: true })
   imageUrl: string;
@@ -19,8 +25,26 @@ export class BookEntity extends BaseEntity implements Book {
   @Column({ nullable: true })
   publisher: string;
 
-  @Column({ nullable: true })
+  @Column({ nullable: true, default: new Date() })
   publishingDate: Date;
+
+  @Column({ default: 'de' })
+  language: String;
+
+  @Column({ nullable: true })
+  edition: String;
+
+  @Column({ nullable: true })
+  dimensions: String;
+
+  @Column({ nullable: true })
+  pages: number;
+
+  @Column('simple-array')
+  authors: string[];
+
+  @Column({ default: 0 })
+  amount: number;
 
   @ManyToOne(() => UserEntity, { eager: true })
   createdBy: UserEntity;
