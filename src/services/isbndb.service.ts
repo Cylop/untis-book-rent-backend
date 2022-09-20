@@ -14,7 +14,7 @@ class ISBNDBService {
   });
 
   fetchExtraBookData = async (isbn: string): Promise<Book> => {
-    const isbnDbResponse = await this.instance.get(`/book/${isbn}`);
+    const isbnDbResponse = await this.instance.get<ISBNDBResponse>(`/book/${isbn}`);
     if (isbnDbResponse.status !== 200) throw new IsbnDBException(isbnDbResponse.status, isbnDbResponse.statusText);
     const bookResponse = isbnDbResponse.data.book;
     const book: Book = {
