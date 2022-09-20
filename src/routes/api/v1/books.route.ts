@@ -1,6 +1,6 @@
 import BooksController from '@controllers/books.controller';
 import validationMiddleware from '@middlewares/validation.middleware';
-import { CreateBookDto } from '@/dtos/books.dto';
+import { CreateBookDto, UpdateBookDto } from '@/dtos/books.dto';
 import { ApiRouter } from '@/interfaces/routes.interface';
 
 class BooksRoute extends ApiRouter {
@@ -15,7 +15,7 @@ class BooksRoute extends ApiRouter {
     this.router.get('/', this.booksController.getBooks);
     this.router.get('/:isbn', this.booksController.getBookById);
     this.router.post('/', validationMiddleware(CreateBookDto, 'body'), this.booksController.createBook);
-    this.router.put('/:isbn', validationMiddleware(CreateBookDto, 'body', true), this.booksController.updateBook);
+    this.router.put('/:isbn', validationMiddleware(UpdateBookDto, 'body', true), this.booksController.updateBook);
     this.router.delete('/:isbn', this.booksController.deleteBook);
   }
 }
