@@ -3,11 +3,15 @@ import { UserEntity } from './users.entity';
 import { BookRent } from '@/interfaces/bookrents.interface';
 import { SchoolClassEntity } from './schoolclasses.entity';
 import { RentStatus } from '@/dtos/bookrents.dto';
+import { BookEntity } from './books.entity';
 
 @Entity()
 export class BookRentEntity extends BaseEntity implements BookRent {
   @PrimaryColumn({ unique: true })
-  isbn: string;
+  id: string;
+
+  @ManyToOne(() => BookEntity, { eager: true })
+  book: BookEntity;
 
   @ManyToOne(() => SchoolClassEntity, { eager: true })
   classNum: SchoolClassEntity;

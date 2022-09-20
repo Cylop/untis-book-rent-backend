@@ -4,6 +4,8 @@ import { mapToDto } from '@/utils/mapToDto';
 import { ResponseContainerDto } from '@/dtos/response.dto';
 import { SchoolClass } from '@/interfaces/schoolclass.interface';
 import { CreateSchoolClassDto, SchoolClassResultDto } from '@/dtos/schoolclass.dto';
+import { isNumber } from 'class-validator';
+import { HttpException } from '@/exceptions/HttpException';
 
 class UsersController {
   public schoolClassService = new SchoolClassService();
@@ -24,8 +26,13 @@ class UsersController {
 
   public getSchoolClassById = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
     try {
-      const id = Number(req.params.id);
-      const findOneClassData: SchoolClass = await this.schoolClassService.findSchoolClassById(id);
+      const id = req.params.id;
+
+      const parsed = Number.parseInt(id);
+      if (!isNumber(parsed, { allowNaN: false, maxDecimalPlaces: 0, allowInfinity: false }))
+        throw new HttpException(409, `Id must be a number but received: ${id}`);
+
+      const findOneClassData: SchoolClass = await this.schoolClassService.findSchoolClassById(parsed);
       const dto = mapToDto<SchoolClass, SchoolClassResultDto>(findOneClassData, SchoolClassResultDto);
 
       res.status(200).json(new ResponseContainerDto(req, dto, 'findOne'));
@@ -48,9 +55,14 @@ class UsersController {
 
   public updateSchoolClass = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
     try {
-      const id = Number(req.params.id);
+      const id = req.params.id;
+
+      const parsed = Number.parseInt(id);
+      if (!isNumber(parsed, { allowNaN: false, maxDecimalPlaces: 0, allowInfinity: false }))
+        throw new HttpException(409, `Id must be a number but received: ${id}`);
+
       const classData: CreateSchoolClassDto = req.body;
-      const updateClassData: SchoolClass = await this.schoolClassService.updateSchoolClass(id, classData);
+      const updateClassData: SchoolClass = await this.schoolClassService.updateSchoolClass(parsed, classData);
       const dto = mapToDto<SchoolClass, SchoolClassResultDto>(updateClassData, SchoolClassResultDto);
 
       res.status(200).json(new ResponseContainerDto(req, dto, 'updated'));
@@ -61,8 +73,13 @@ class UsersController {
 
   public deleteSchoolClass = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
     try {
-      const id = Number(req.params.id);
-      const deleteClassData: SchoolClass = await this.schoolClassService.deleteSchoolClass(id);
+      const id = req.params.id;
+
+      const parsed = Number.parseInt(id);
+      if (!isNumber(parsed, { allowNaN: false, maxDecimalPlaces: 0, allowInfinity: false }))
+        throw new HttpException(409, `Id must be a number but received: ${id}`);
+
+      const deleteClassData: SchoolClass = await this.schoolClassService.deleteSchoolClass(parsed);
       const dto = mapToDto<SchoolClass, SchoolClassResultDto>(deleteClassData, SchoolClassResultDto);
 
       res.status(200).json(new ResponseContainerDto(req, dto, 'deleted'));

@@ -9,7 +9,6 @@ import { CreateBookDto, UpdateBookDto } from '@/dtos/books.dto';
 
 import ISBN from 'isbn3';
 import ISBNDBService from './isbndb.service';
-import { logger } from '@/utils/logger';
 
 @EntityRepository()
 class BookService extends Repository<BookEntity> {
@@ -59,7 +58,6 @@ class BookService extends Repository<BookEntity> {
       throw new HttpException(error?.status ?? 500, error?.message ?? 'Unknown error');
     }
 
-    logger.log('Info', 'fetchedBookData: ' + fetchedBookData);
     const createBookData: Book = await BookEntity.create({ ...fetchedBookData, createdBy: findUser }).save();
 
     return createBookData;
