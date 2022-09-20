@@ -1,7 +1,8 @@
+import { Book } from '@/interfaces/books.interface';
 import { SchoolClass } from '@/interfaces/schoolclass.interface';
 import { User } from '@/interfaces/users.interface';
 import { Expose } from 'class-transformer';
-import { IsEnum, IsISBN, IsNumber, IsOptional, IsString, Max, Min } from 'class-validator';
+import { IsEnum, IsNumber, IsOptional, IsString, Max, Min } from 'class-validator';
 import { BaseDto } from './base.dto';
 
 export enum RentStatus {
@@ -11,11 +12,8 @@ export enum RentStatus {
 }
 
 export class CreateBookRentDto extends BaseDto {
-  @IsISBN()
-  public isbn: string;
-
-  @IsEnum(RentStatus)
-  public status: RentStatus;
+  @IsString()
+  public bookId: string;
 
   @IsNumber({ maxDecimalPlaces: 0 })
   @Min(0)
@@ -44,18 +42,11 @@ export class UpdateBookRentDto extends BaseDto {
   public amount: number;
 }
 
-export class DeleteBookRentDto extends BaseDto {
-  @IsISBN()
-  public isbn: string;
-
-  @IsNumber()
-  public classNum: number;
-}
-
 export class BookRentResultDto extends BaseDto {
-  @Expose() public isbn: string;
+  @Expose() public id: string;
   @Expose() public status: RentStatus;
   @Expose() public amount: number;
   @Expose() public classNum: SchoolClass;
   @Expose() public rentedBy: User;
+  @Expose() public book: Book;
 }
