@@ -4,7 +4,7 @@ import { mapToDto, MultipleChildrenMapper } from '@/utils/mapToDto';
 import { Book } from '@/interfaces/books.interface';
 import { BookResultDto, CreateBookDto, UpdateBookDto } from '@/dtos/books.dto';
 import { UserResultDto } from '@/dtos/users.dto';
-import { ResponseContainerDto } from '@/dtos/response.dto';
+import { Paginated, PaginatedResponseContainerDto, PaginationRequest, ResponseContainerDto } from '@/dtos/response.dto';
 
 const childMapper: MultipleChildrenMapper<BookResultDto> = [
   {
@@ -18,12 +18,12 @@ class BooksController {
 
   public getBooks = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
     try {
-      const findAllBooksData: Book[] = await this.bookService.findAllBook();
+      const findAllBooksData: Paginated<Book[]> = await this.bookService.findAllBook(req.pagination);
       try {
-        const dto = mapToDto<Book, BookResultDto>(findAllBooksData, BookResultDto, childMapper);
-        res.status(200).json(new ResponseContainerDto(req, dto, 'findAll'));
+        const dto = mapToDto<Book, BookResultDto>(findAllBooksData.data, BookResultDto, childMapper);
+        res.status(200).json(new PaginatedResponseContainerDto(req, new Paginated(dto, findAllBooksData.paginationMeta), 'findAll'));
       } catch (error) {
-        res.status(200).json(new ResponseContainerDto(req, [], 'findAll'));
+        res.status(200).json(new PaginatedResponseContainerDto(req, new Paginated([], findAllBooksData.paginationMeta), 'findAll'));
       }
     } catch (error) {
       next(error);
