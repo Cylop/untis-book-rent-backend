@@ -11,26 +11,25 @@ GET {{ baseURL }}/{{ endpoint }}
 GET {{ baseURL }}/{{ endpoint }}/1
 
 ###
-# Find Book rent by Isbn and classNum
-GET {{ baseURL }}/{{ endpoint }}/978-7-8564-7719-4/1
+# Find Book rent by classNum and BookId 
+GET {{ baseURL }}/{{ endpoint }}/1/dNG7RMrsFqccbCze562zj
 
 ###
 # Create Book Rent
 POST {{ baseURL }}/{{ endpoint }}
 Content-Type: application/json
-##978-3-1057-5285-2
+##978-3-1057-5285-2 "dNG7RMrsFqccbCze562zj",
 
 {
-    "isbn": "978-7-8564-7719-4",
-    "classNum": 1,
-    "status": "rented",
+    "bookId": "mdx_Ttc-0omJfNWhSIwWL",
+    "classNum":1,
     "rentedBy": 3,
-    "amount": 50
+    "amount": 10
 }
 
 ###
-# Modify Book Rent By Isbn and class
-PUT {{ baseURL }}/{{ endpoint }}/978-7-8564-7719-4/1
+# Modify Book Rent By classNum and BookId
+PUT {{ baseURL }}/{{ endpoint }}/1/mdx_Ttc-0omJfNWhSIwWL
 Content-Type: application/json
 
 {
@@ -38,5 +37,5 @@ Content-Type: application/json
 }
 
 ###
-# Delete Book By Isbn
-DELETE {{ baseURL }}/{{ endpoint }}/978-7-8564-7719-4
+# Delete Book Rent By classNum and BookId
+DELETE {{ baseURL }}/{{ endpoint }}/asda/mdx_Ttc-0omJfNWhSIwWL
