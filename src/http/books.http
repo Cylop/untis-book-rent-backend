@@ -4,7 +4,7 @@
 
 ###
 # Find All Books
-GET {{ baseURL }}/{{ endpoint }}
+GET {{ baseURL }}/{{ endpoint }}?page=1
 
 ###
 # Find Book By Isbn

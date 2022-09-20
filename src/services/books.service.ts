@@ -9,14 +9,15 @@ import { CreateBookDto, UpdateBookDto } from '@/dtos/books.dto';
 
 import ISBN from 'isbn3';
 import ISBNDBService from './isbndb.service';
+import { Paginated, PaginationRequest } from '@/dtos/response.dto';
 
 @EntityRepository()
 class BookService extends Repository<BookEntity> {
   private isbnDbSerice = new ISBNDBService();
 
-  public async findAllBook(): Promise<Book[]> {
-    const books: Book[] = await BookEntity.find();
-    return books;
+  public async findAllBook(paginationReq: PaginationRequest): Promise<Paginated<Book[]>> {
+    const [data, count] = await BookEntity.findAndCount({ take: paginationReq.pageSize, skip: paginationReq.skip });
+    return new Paginated(data, { page: paginationReq.page, pageSize: paginationReq.pageSize, count });
   }
 
   public async findBookById(isbn: string): Promise<Book> {

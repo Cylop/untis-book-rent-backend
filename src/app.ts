@@ -16,6 +16,17 @@ import errorMiddleware from '@middlewares/error.middleware';
 import { logger, stream } from '@utils/logger';
 import ApiRoute from './routes/api/api.route';
 
+import { PaginationRequest } from './dtos/response.dto';
+
+declare global {
+  // eslint-disable-next-line @typescript-eslint/no-namespace
+  namespace Express {
+    interface Request {
+      pagination?: PaginationRequest;
+    }
+  }
+}
+
 class App {
   public app: express.Application;
   public env: string;
